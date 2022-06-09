@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_all_in_one/models/model.dart';
 import 'package:flutter_all_in_one/utils/route.dart';
 import 'package:flutter_all_in_one/widgets/drawer.dart';
+import 'package:flutter_all_in_one/widgets/style_widgets_gridview.dart';
 import 'package:flutter_all_in_one/widgets/themes.dart';
 
 import '../widgets/style_widgets.dart';
@@ -41,10 +42,28 @@ var list; //can view with only list
       actions: [
         ChangeMyTheme()
       ],),
-      body:(list!=null && list.isNotEmpty)? ListView.builder(itemBuilder: (context, index) {
-      return  StyleWidget(item: list[index],);
-      },
-          itemCount: list.length)
+      body:(list!=null && list.isNotEmpty)? 
+          GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context,index){
+              // final item=list[index];
+               return CatalogModel2(item: list[index],);
+               /* return Card(
+                  clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child: GridTile(
+                      header: Text(item.name),
+                        child: Image.network(item.image),
+                      footer: Text(item.price.toString()),
+                    )
+                );*/
+              },
+              itemCount: list.length,
+          )
       :Center(child: CircularProgressIndicator(),),
       drawer: MyDrawer(),
     );
@@ -52,6 +71,19 @@ var list; //can view with only list
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ChangeMyTheme extends StatefulWidget {
   const ChangeMyTheme({Key? key}) : super(key: key);
